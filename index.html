@@ -14,6 +14,7 @@
   <title>Pickleball Signup Control</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -22,10 +23,10 @@
       margin: 0;
 
       padding:
-        max(20px, env(safe-area-inset-top))
-        max(16px, env(safe-area-inset-right))
-        max(20px, env(safe-area-inset-bottom))
-        max(16px, env(safe-area-inset-left));
+        max(18px, env(safe-area-inset-top))
+        max(14px, env(safe-area-inset-right))
+        max(30px, env(safe-area-inset-bottom))
+        max(14px, env(safe-area-inset-left));
 
       font-family:
         -apple-system,
@@ -42,25 +43,23 @@
 
     .container {
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       margin: 0 auto;
     }
 
     .eyebrow {
-      margin-bottom: 6px;
-
       color: #2563eb;
-
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
     }
 
     h1 {
       margin: 0;
-
-      font-size: 30px;
+      font-size: 29px;
+      letter-spacing: -0.6px;
       line-height: 1.15;
-      letter-spacing: -0.5px;
     }
 
     .subtitle {
@@ -70,21 +69,25 @@
       color: #64748b;
 
       font-size: 15px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .card {
-      margin-top: 22px;
-      padding: 22px;
+      margin-top: 16px;
+      padding: 20px;
 
-      background: #ffffff;
+      background: white;
 
       border: 1px solid #e2e8f0;
       border-radius: 22px;
 
       box-shadow:
-        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 1px 2px rgba(15, 23, 42, 0.03),
         0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    .primaryCard {
+      margin-top: 22px;
     }
 
     .statusRow {
@@ -97,23 +100,21 @@
       width: 13px;
       height: 13px;
 
-      margin-top: 7px;
-
-      border-radius: 50%;
+      margin-top: 6px;
 
       flex-shrink: 0;
+
+      border-radius: 50%;
     }
 
     .dot.on {
       background: #22c55e;
-
       box-shadow:
         0 0 0 4px rgba(34, 197, 94, 0.12);
     }
 
     .dot.off {
       background: #ef4444;
-
       box-shadow:
         0 0 0 4px rgba(239, 68, 68, 0.12);
     }
@@ -126,32 +127,45 @@
       margin: 0;
 
       font-size: 21px;
-      font-weight: 700;
-
+      font-weight: 750;
       line-height: 1.3;
     }
 
-    .statusDescription {
-      margin-top: 6px;
+    .description {
+      margin-top: 5px;
 
       color: #64748b;
 
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.45;
+    }
+
+    .sectionTitle {
+      margin: 0;
+
+      font-size: 18px;
+      font-weight: 750;
+    }
+
+    .sectionDescription {
+      margin-top: 5px;
+      margin-bottom: 0;
+
+      color: #64748b;
+
+      font-size: 13px;
+      line-height: 1.45;
     }
 
     button {
       width: 100%;
-      min-height: 56px;
-
-      margin-top: 22px;
-      padding: 12px 18px;
+      min-height: 52px;
 
       border: none;
-      border-radius: 16px;
+      border-radius: 15px;
 
       font-family: inherit;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
 
       cursor: pointer;
@@ -159,33 +173,60 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    button.pause {
-      background: #dc2626;
-      color: #ffffff;
-    }
-
-    button.resume {
-      background: #2563eb;
-      color: #ffffff;
-    }
-
-    button.loading {
-      background: #cbd5e1;
-      color: #475569;
-    }
-
     button:disabled {
+      opacity: 0.6;
       cursor: default;
-      opacity: 0.75;
+    }
+
+    .mainButton {
+      margin-top: 20px;
+      min-height: 56px;
+      font-size: 17px;
+    }
+
+    .pause {
+      background: #dc2626;
+      color: white;
+    }
+
+    .resume {
+      background: #2563eb;
+      color: white;
+    }
+
+    .secondaryButton {
+      margin-top: 15px;
+
+      background: #f8fafc;
+      color: #334155;
+
+      border: 1px solid #cbd5e1;
+    }
+
+    .includedButton {
+      margin-top: 14px;
+
+      color: #334155;
+      background: #f8fafc;
+
+      border: 1px solid #cbd5e1;
+    }
+
+    .skippedButton {
+      margin-top: 14px;
+
+      color: #1d4ed8;
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
     }
 
     .message {
-      margin-top: 14px;
+      margin-top: 13px;
 
       color: #64748b;
 
       font-size: 13px;
-      line-height: 1.45;
     }
 
     .message.success {
@@ -196,38 +237,182 @@
       color: #b91c1c;
     }
 
-    .firebaseIndicator {
-      display: inline-flex;
+    .nextRun {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .nextRunLabel {
+      display: flex;
       align-items: center;
+      gap: 7px;
 
-      margin-top: 20px;
-      padding: 8px 11px;
+      color: #1e40af;
 
-      background: #f1f5f9;
+      font-size: 13px;
+      font-weight: 700;
+    }
 
-      border-radius: 999px;
+    .nextRunDate {
+      margin-top: 12px;
 
-      color: #475569;
+      font-size: 22px;
+      font-weight: 750;
+    }
 
-      font-size: 12px;
+    .nextRunTime {
+      margin-top: 3px;
+
+      color: #334155;
+
+      font-size: 17px;
       font-weight: 600;
     }
 
-    @media (max-width: 390px) {
+    .nextRunNote {
+      margin-top: 7px;
 
-      h1 {
-        font-size: 27px;
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+    .dayGrid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+
+      margin-top: 16px;
+    }
+
+    .dayCard {
+      padding: 16px;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 17px;
+    }
+
+    .dayHeader {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .dayName {
+      font-size: 17px;
+      font-weight: 750;
+    }
+
+    .dayTime {
+      margin-top: 4px;
+
+      color: #64748b;
+
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+
+      padding: 6px 9px;
+
+      border-radius: 999px;
+
+      font-size: 12px;
+      font-weight: 750;
+
+      white-space: nowrap;
+    }
+
+    .badgeIncluded {
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    .badgeSkipped {
+      color: #475569;
+      background: #e2e8f0;
+    }
+
+    .dateGrid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 13px;
+
+      margin-top: 16px;
+    }
+
+    label {
+      display: block;
+
+      color: #334155;
+
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      min-height: 50px;
+
+      margin-top: 7px;
+      padding: 0 12px;
+
+      color: #0f172a;
+      background: white;
+
+      border: 1px solid #cbd5e1;
+      border-radius: 13px;
+
+      font-family: inherit;
+      font-size: 16px;
+
+      -webkit-appearance: none;
+    }
+
+    .vacationStatus {
+      margin-top: 14px;
+
+      padding: 12px 13px;
+
+      background: #f8fafc;
+
+      border-radius: 13px;
+
+      color: #475569;
+
+      font-size: 13px;
+      line-height: 1.45;
+
+      display: none;
+    }
+
+    .footer {
+      margin-top: 22px;
+
+      text-align: center;
+
+      color: #94a3b8;
+
+      font-size: 11px;
+    }
+
+    @media (min-width: 520px) {
+
+      .dayGrid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .card {
-        padding: 19px;
-      }
-
-      .statusTitle {
-        font-size: 19px;
+      .dateGrid {
+        grid-template-columns: 1fr 1fr;
       }
 
     }
+
   </style>
 </head>
 
@@ -245,11 +430,13 @@
     </h1>
 
     <p class="subtitle">
-      Control whether automatic registration is active.
+      Choose when automatic registration should run.
     </p>
 
 
-    <section class="card">
+    <!-- MAIN ON/OFF CONTROL -->
+
+    <section class="card primaryCard">
 
       <div class="statusRow">
 
@@ -269,7 +456,7 @@
 
           <div
             id="statusDescription"
-            class="statusDescription"
+            class="description"
           >
             Reading the current setting from Firebase.
           </div>
@@ -281,7 +468,7 @@
 
       <button
         id="toggleButton"
-        class="loading"
+        class="mainButton"
         disabled
       >
         Connecting...
@@ -289,7 +476,7 @@
 
 
       <div
-        id="message"
+        id="mainMessage"
         class="message"
       >
         Connecting to Firebase...
@@ -298,8 +485,206 @@
     </section>
 
 
-    <div class="firebaseIndicator">
-      ● Firebase connected control
+    <!-- NEXT AUTOMATION RUN -->
+
+    <section class="card nextRun">
+
+      <div class="nextRunLabel">
+        📅 Next automation run
+      </div>
+
+      <div
+        id="nextRunDate"
+        class="nextRunDate"
+      >
+        Calculating...
+      </div>
+
+      <div class="nextRunTime">
+        6:45 PM
+      </div>
+
+      <div class="nextRunNote">
+        Registration opens at 7:00 PM Regina time.
+      </div>
+
+    </section>
+
+
+    <!-- SESSION PREFERENCES -->
+
+    <section class="card">
+
+      <h2 class="sectionTitle">
+        Session preferences
+      </h2>
+
+      <p class="sectionDescription">
+        Choose which weekly sessions should be attempted.
+      </p>
+
+
+      <div class="dayGrid">
+
+        <!-- Wednesday -->
+
+        <div class="dayCard">
+
+          <div class="dayHeader">
+
+            <div>
+
+              <div class="dayName">
+                Wednesday
+              </div>
+
+              <div class="dayTime">
+                11:00 AM–1:30 PM
+              </div>
+
+            </div>
+
+
+            <span
+              id="wednesdayBadge"
+              class="badge"
+            >
+              Loading
+            </span>
+
+          </div>
+
+
+          <button
+            id="wednesdayButton"
+            class="includedButton"
+            disabled
+          >
+            Loading...
+          </button>
+
+        </div>
+
+
+        <!-- Friday -->
+
+        <div class="dayCard">
+
+          <div class="dayHeader">
+
+            <div>
+
+              <div class="dayName">
+                Friday
+              </div>
+
+              <div class="dayTime">
+                12:30 PM–3:00 PM
+              </div>
+
+            </div>
+
+
+            <span
+              id="fridayBadge"
+              class="badge"
+            >
+              Loading
+            </span>
+
+          </div>
+
+
+          <button
+            id="fridayButton"
+            class="includedButton"
+            disabled
+          >
+            Loading...
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- VACATION -->
+
+    <section class="card">
+
+      <h2 class="sectionTitle">
+        Pause while away
+      </h2>
+
+      <p class="sectionDescription">
+        Sessions during these dates will be skipped automatically.
+      </p>
+
+
+      <div class="dateGrid">
+
+        <label>
+
+          Away from
+
+          <input
+            type="date"
+            id="pauseFrom"
+          >
+
+        </label>
+
+
+        <label>
+
+          Returning
+
+          <input
+            type="date"
+            id="pauseUntil"
+          >
+
+        </label>
+
+      </div>
+
+
+      <button
+        id="saveVacationButton"
+        class="secondaryButton"
+        disabled
+      >
+        Save vacation dates
+      </button>
+
+
+      <button
+        id="clearVacationButton"
+        class="secondaryButton"
+        disabled
+      >
+        Clear vacation dates
+      </button>
+
+
+      <div
+        id="vacationStatus"
+        class="vacationStatus"
+      ></div>
+
+
+      <div
+        id="vacationMessage"
+        class="message"
+      ></div>
+
+    </section>
+
+
+    <div class="footer">
+      Settings synchronized with Firebase
     </div>
 
   </main>
@@ -314,368 +699,3 @@
 
 
     import {
-      getFirestore,
-      doc,
-      onSnapshot,
-      updateDoc
-    } from
-      "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-
-    /*
-     * FIREBASE CONFIGURATION
-     */
-
-    const firebaseConfig = {
-
-      apiKey:
-        "AIzaSyA5cbuNP_QgFnQfaZ8H851h_D3UU_UOcPM",
-
-      authDomain:
-        "pickleball-signup-a35aa.firebaseapp.com",
-
-      projectId:
-        "pickleball-signup-a35aa",
-
-      storageBucket:
-        "pickleball-signup-a35aa.firebasestorage.app",
-
-      messagingSenderId:
-        "257623392675",
-
-      appId:
-        "1:257623392675:web:a847008a080f0f28a7da16",
-
-      measurementId:
-        "G-SMX0L2DJ15"
-
-    };
-
-
-    /*
-     * INITIALIZE FIREBASE
-     */
-
-    const app =
-      initializeApp(
-        firebaseConfig
-      );
-
-
-    const db =
-      getFirestore(
-        app
-      );
-
-
-    /*
-     * FIRESTORE DOCUMENT
-     *
-     * config
-     *   └── control
-     */
-
-    const controlRef =
-      doc(
-        db,
-        "config",
-        "control"
-      );
-
-
-    /*
-     * PAGE ELEMENTS
-     */
-
-    const statusDot =
-      document.getElementById(
-        "statusDot"
-      );
-
-
-    const statusTitle =
-      document.getElementById(
-        "statusTitle"
-      );
-
-
-    const statusDescription =
-      document.getElementById(
-        "statusDescription"
-      );
-
-
-    const toggleButton =
-      document.getElementById(
-        "toggleButton"
-      );
-
-
-    const message =
-      document.getElementById(
-        "message"
-      );
-
-
-    /*
-     * CURRENT FIREBASE VALUE
-     */
-
-    let signupEnabled = null;
-
-
-    /*
-     * UPDATE PAGE
-     */
-
-    function updateInterface() {
-
-      if (signupEnabled === true) {
-
-        statusDot.className =
-          "dot on";
-
-
-        statusTitle.textContent =
-          "Automatic signup is ON";
-
-
-        statusDescription.textContent =
-          "The registration program is allowed to book sessions.";
-
-
-        toggleButton.textContent =
-          "Pause signups";
-
-
-        toggleButton.className =
-          "pause";
-
-
-        toggleButton.disabled =
-          false;
-
-      }
-
-      else {
-
-        statusDot.className =
-          "dot off";
-
-
-        statusTitle.textContent =
-          "Automatic signup is OFF";
-
-
-        statusDescription.textContent =
-          "No sessions should be booked until signup is resumed.";
-
-
-        toggleButton.textContent =
-          "Resume signups";
-
-
-        toggleButton.className =
-          "resume";
-
-
-        toggleButton.disabled =
-          false;
-
-      }
-
-    }
-
-
-    /*
-     * LISTEN TO FIREBASE
-     *
-     * Any change to config/control is pushed
-     * to this page in real time.
-     */
-
-    onSnapshot(
-
-      controlRef,
-
-
-      (snapshot) => {
-
-        if (!snapshot.exists()) {
-
-          statusTitle.textContent =
-            "Configuration not found";
-
-
-          statusDescription.textContent =
-            "Firebase could not find config/control.";
-
-
-          statusDot.className =
-            "dot off";
-
-
-          toggleButton.disabled =
-            true;
-
-
-          message.textContent =
-            "Create the config/control document in Firestore.";
-
-
-          message.className =
-            "message error";
-
-
-          return;
-
-        }
-
-
-        const data =
-          snapshot.data();
-
-
-        signupEnabled =
-          data.enabled !== false;
-
-
-        updateInterface();
-
-
-        message.textContent =
-          "Setting synchronized with Firebase.";
-
-
-        message.className =
-          "message success";
-
-      },
-
-
-      (error) => {
-
-        console.error(
-          "Firebase read error:",
-          error
-        );
-
-
-        statusTitle.textContent =
-          "Firebase connection error";
-
-
-        statusDescription.textContent =
-          "The current signup setting could not be loaded.";
-
-
-        statusDot.className =
-          "dot off";
-
-
-        toggleButton.disabled =
-          true;
-
-
-        message.textContent =
-          error.message;
-
-
-        message.className =
-          "message error";
-
-      }
-
-    );
-
-
-    /*
-     * PAUSE / RESUME BUTTON
-     */
-
-    toggleButton.addEventListener(
-
-      "click",
-
-
-      async () => {
-
-        if (signupEnabled === null) {
-          return;
-        }
-
-
-        toggleButton.disabled =
-          true;
-
-
-        toggleButton.className =
-          "loading";
-
-
-        toggleButton.textContent =
-          "Saving...";
-
-
-        message.textContent =
-          "Updating Firebase...";
-
-
-        message.className =
-          "message";
-
-
-        try {
-
-          await updateDoc(
-
-            controlRef,
-
-            {
-              enabled:
-                !signupEnabled
-            }
-
-          );
-
-
-          /*
-           * Do not manually change signupEnabled here.
-           *
-           * Firestore onSnapshot will receive the saved
-           * value and update the interface.
-           */
-
-        }
-
-
-        catch (error) {
-
-          console.error(
-            "Firebase write error:",
-            error
-          );
-
-
-          message.textContent =
-            "Could not save setting: " +
-            error.message;
-
-
-          message.className =
-            "message error";
-
-
-          updateInterface();
-
-        }
-
-      }
-
-    );
-
-  </script>
-
-</body>
-
-</html>
