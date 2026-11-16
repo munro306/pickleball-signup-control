@@ -43,8 +43,8 @@
     <section class="card">
       <h2 class="sectionTitle">Session preferences</h2><p class="sectionDescription">Choose which weekly sessions should be attempted.</p>
       <div class="dayGrid">
-        <div class="dayCard"><div class="dayHeader"><div><div class="dayName">Wednesday</div><div class="dayTime">11:00 AM–1:30 PM</div></div><span id="wednesdayBadge" class="badge badgeSkipped">Loading</span></div><button id="wednesdayButton" class="includedButton" disabled>Loading...</button></div>
-        <div class="dayCard"><div class="dayHeader"><div><div class="dayName">Friday</div><div class="dayTime">12:30 PM–3:00 PM</div></div><span id="fridayBadge" class="badge badgeSkipped">Loading</span></div><button id="fridayButton" class="includedButton" disabled>Loading...</button></div>
+        <div class="dayCard"><div class="dayHeader"><div><div class="dayName">Wednesday</div><div id="wednesdayDate" class="dayTime">Calculating date...</div><div class="dayTime">11:00 AM–1:30 PM</div></div><span id="wednesdayBadge" class="badge badgeSkipped">Loading</span></div><button id="wednesdayButton" class="includedButton" disabled>Loading...</button></div>
+        <div class="dayCard"><div class="dayHeader"><div><div class="dayName">Friday</div><div id="fridayDate" class="dayTime">Calculating date...</div><div class="dayTime">12:30 PM–3:00 PM</div></div><span id="fridayBadge" class="badge badgeSkipped">Loading</span></div><button id="fridayButton" class="includedButton" disabled>Loading...</button></div>
       </div>
     </section>
 
@@ -89,6 +89,22 @@
   function showView(admin){$("controlsView").classList.toggle("active",!admin);$("adminView").classList.toggle("active",admin);$("controlsTab").classList.toggle("active",!admin);$("adminTab").classList.toggle("active",admin)}
   $("controlsTab").onclick=()=>showView(false);$("adminTab").onclick=()=>showView(true);
 
+  function nextWeekday(targetDay){
+    const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Regina",year:"numeric",month:"numeric",day:"numeric",hour:"numeric",hour12:false}).formatToParts(new Date());
+    const p=t=>Number(parts.find(x=>x.type===t).value);
+    const d=new Date(p("year"),p("month")-1,p("day"),p("hour"));
+    let add=(targetDay-d.getDay()+7)%7;
+    if(add===0)add=7;
+    d.setDate(d.getDate()+add);
+    return d;
+  }
+  function sessionLongDate(d){return d.toLocaleDateString("en-CA",{weekday:"long",month:"long",day:"numeric",year:"numeric"})}
+  function sessionShortDate(d){return d.toLocaleDateString("en-CA",{weekday:"short",month:"short",day:"numeric"})}
+  const nextWednesdaySession=nextWeekday(3);
+  const nextFridaySession=nextWeekday(5);
+  $("wednesdayDate").textContent=sessionLongDate(nextWednesdaySession);
+  $("fridayDate").textContent=sessionLongDate(nextFridaySession);
+
   function nextFriday(){const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Regina",year:"numeric",month:"numeric",day:"numeric",hour:"numeric",hour12:false}).formatToParts(new Date());const p=t=>Number(parts.find(x=>x.type===t).value);const d=new Date(p("year"),p("month")-1,p("day"),p("hour"));let add=(5-d.getDay()+7)%7;if(add===0&&d.getHours()>=19)add=7;d.setDate(d.getDate()+add);return d}
   $("nextRunDate").textContent=nextFriday().toLocaleDateString("en-CA",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
 
@@ -100,14 +116,14 @@
   function badge(status){const s=String(status||"ready").toLowerCase();const cls=s==="success"?"badgeSuccess":s==="partial"?"badgePartial":s==="failed"?"badgeFailed":s==="running"?"badgeRunning":"badgeReady";return `<span class="badge ${cls}">${safe(s)}</span>`}
 
   function displayMaster(){const on=settings.enabled;$("statusDot").className="dot "+(on?"on":"off");$("statusTitle").textContent=on?"Automatic signup is ON":"Automatic signup is OFF";$("statusDescription").textContent=on?"The registration program is allowed to book sessions.":"No sessions will be booked until signup is resumed.";$("toggleButton").textContent=on?"Pause signups":"Resume signups";$("toggleButton").className="mainButton "+(on?"pause":"resume");$("toggleButton").disabled=false}
-  function displayDay(on,b,bn){$(b).textContent=on?"Included":"Skipped";$(b).className="badge "+(on?"badgeIncluded":"badgeSkipped");$(bn).textContent=on?"Skip this day":"Include this day";$(bn).className=on?"includedButton":"skippedButton";$(bn).disabled=false}
+  function displayDay(on,b,bn,label,date){$(b).textContent=on?"Included":"Skipped";$(b).className="badge "+(on?"badgeIncluded":"badgeSkipped");$(bn).textContent=(on?"Skip ":"Include ")+label+", "+sessionShortDate(date);$(bn).className=on?"includedButton":"skippedButton";$(bn).disabled=false}
   function displayVacation(){$("pauseFrom").value=settings.pauseFrom||"";$("pauseUntil").value=settings.pauseUntil||"";$("saveVacationButton").disabled=false;$("clearVacationButton").disabled=false;if(settings.pauseFrom&&settings.pauseUntil){$("vacationStatus").style.display="block";$("vacationStatus").textContent="Signup will skip sessions from "+prettyDate(settings.pauseFrom)+" through the day before "+prettyDate(settings.pauseUntil)+"."}else{$("vacationStatus").style.display="none"}}
 
   try{
     if(typeof firebase==="undefined")throw new Error("Firebase library did not load.");
     firebase.initializeApp(firebaseConfig);const db=firebase.firestore();const controlRef=db.collection("config").doc("control");
     const connectionGood=()=>{$("connection").textContent="● Connected to Firebase";$("connection").className="connection good"};
-    controlRef.onSnapshot(s=>{if(!s.exists)throw new Error("config/control not found");const d=s.data();settings={enabled:d.enabled!==false,wednesdayEnabled:d.wednesdayEnabled!==false,fridayEnabled:d.fridayEnabled!==false,pauseFrom:d.pauseFrom||null,pauseUntil:d.pauseUntil||null};displayMaster();displayDay(settings.wednesdayEnabled,"wednesdayBadge","wednesdayButton");displayDay(settings.fridayEnabled,"fridayBadge","fridayButton");displayVacation();$("mainMessage").textContent="Setting synchronized with Firebase.";$("mainMessage").className="message success";connectionGood()},e=>{$("mainMessage").textContent=e.message;$("mainMessage").className="message error"});
+    controlRef.onSnapshot(s=>{if(!s.exists)throw new Error("config/control not found");const d=s.data();settings={enabled:d.enabled!==false,wednesdayEnabled:d.wednesdayEnabled!==false,fridayEnabled:d.fridayEnabled!==false,pauseFrom:d.pauseFrom||null,pauseUntil:d.pauseUntil||null};displayMaster();displayDay(settings.wednesdayEnabled,"wednesdayBadge","wednesdayButton","Wednesday",nextWednesdaySession);displayDay(settings.fridayEnabled,"fridayBadge","fridayButton","Friday",nextFridaySession);displayVacation();$("mainMessage").textContent="Setting synchronized with Firebase.";$("mainMessage").className="message success";connectionGood()},e=>{$("mainMessage").textContent=e.message;$("mainMessage").className="message error"});
 
     async function updateControl(data){await controlRef.update(data)}
     $("toggleButton").onclick=async()=>{try{$("toggleButton").disabled=true;await updateControl({enabled:!settings.enabled})}catch(e){$("mainMessage").textContent=e.message;$("toggleButton").disabled=false}};
