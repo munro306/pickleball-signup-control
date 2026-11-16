@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#f8fafc">
+
+  <title>Pickleball Signup Control</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+
+      padding:
+        max(20px, env(safe-area-inset-top))
+        max(16px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(16px, env(safe-area-inset-left));
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin-bottom: 6px;
+
+      color: #2563eb;
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      margin-bottom: 0;
+
+      color: #64748b;
+
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .card {
+      margin-top: 22px;
+      padding: 22px;
+
+      background: #ffffff;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+
+      box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    .statusRow {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .dot {
+      width: 13px;
+      height: 13px;
+
+      margin-top: 7px;
+
+      border-radius: 50%;
+
+      flex-shrink: 0;
+    }
+
+    .dot.on {
+      background: #22c55e;
+
+      box-shadow:
+        0 0 0 4px rgba(34, 197, 94, 0.12);
+    }
+
+    .dot.off {
+      background: #ef4444;
+
+      box-shadow:
+        0 0 0 4px rgba(239, 68, 68, 0.12);
+    }
+
+    .dot.loading {
+      background: #94a3b8;
+    }
+
+    .statusTitle {
+      margin: 0;
+
+      font-size: 21px;
+      font-weight: 700;
+
+      line-height: 1.3;
+    }
+
+    .statusDescription {
+      margin-top: 6px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    button {
+      width: 100%;
+      min-height: 56px;
+
+      margin-top: 22px;
+      padding: 12px 18px;
+
+      border: none;
+      border-radius: 16px;
+
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button.pause {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    button.resume {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    button.loading {
+      background: #cbd5e1;
+      color: #475569;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.75;
+    }
+
+    .message {
+      margin-top: 14px;
+
+      color: #64748b;
+
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .message.success {
+      color: #15803d;
+    }
+
+    .message.error {
+      color: #b91c1c;
+    }
+
+    .firebaseIndicator {
+      display: inline-flex;
+      align-items: center;
+
+      margin-top: 20px;
+      padding: 8px 11px;
+
+      background: #f1f5f9;
+
+      border-radius: 999px;
+
+      color: #475569;
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 390px) {
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .card {
+        padding: 19px;
+      }
+
+      .statusTitle {
+        font-size: 19px;
+      }
+
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="container">
+
+    <div class="eyebrow">
+      PICKLEBALL SIGNUP CONTROL
+    </div>
+
+    <h1>
+      Automatic signup
+    </h1>
+
+    <p class="subtitle">
+      Control whether automatic registration is active.
+    </p>
+
+
+    <section class="card">
+
+      <div class="statusRow">
+
+        <span
+          id="statusDot"
+          class="dot loading"
+        ></span>
+
+        <div>
+
+          <h2
+            id="statusTitle"
+            class="statusTitle"
+          >
+            Connecting...
+          </h2>
+
+          <div
+            id="statusDescription"
+            class="statusDescription"
+          >
+            Reading the current setting from Firebase.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="toggleButton"
+        class="loading"
+        disabled
+      >
+        Connecting...
+      </button>
+
+
+      <div
+        id="message"
+        class="message"
+      >
+        Connecting to Firebase...
+      </div>
+
+    </section>
+
+
+    <div class="firebaseIndicator">
+      ● Firebase connected control
+    </div>
+
+  </main>
+
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from
+      "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+
+
+    import {
+      getFirestore,
+      doc,
+      onSnapshot,
+      updateDoc
+    } from
+      "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+
+    /*
+     * FIREBASE CONFIGURATION
+     */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyA5cbuNP_QgFnQfaZ8H851h_D3UU_UOcPM",
+
+      authDomain:
+        "pickleball-signup-a35aa.firebaseapp.com",
+
+      projectId:
+        "pickleball-signup-a35aa",
+
+      storageBucket:
+        "pickleball-signup-a35aa.firebasestorage.app",
+
+      messagingSenderId:
+        "257623392675",
+
+      appId:
+        "1:257623392675:web:a847008a080f0f28a7da16",
+
+      measurementId:
+        "G-SMX0L2DJ15"
+
+    };
+
+
+    /*
+     * INITIALIZE FIREBASE
+     */
+
+    const app =
+      initializeApp(
+        firebaseConfig
+      );
+
+
+    const db =
+      getFirestore(
+        app
+      );
+
+
+    /*
+     * FIRESTORE DOCUMENT
+     *
+     * config
+     *   └── control
+     */
+
+    const controlRef =
+      doc(
+        db,
+        "config",
+        "control"
+      );
+
+
+    /*
+     * PAGE ELEMENTS
+     */
+
+    const statusDot =
+      document.getElementById(
+        "statusDot"
+      );
+
+
+    const statusTitle =
+      document.getElementById(
+        "statusTitle"
+      );
+
+
+    const statusDescription =
+      document.getElementById(
+        "statusDescription"
+      );
+
+
+    const toggleButton =
+      document.getElementById(
+        "toggleButton"
+      );
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    /*
+     * CURRENT FIREBASE VALUE
+     */
+
+    let signupEnabled = null;
+
+
+    /*
+     * UPDATE PAGE
+     */
+
+    function updateInterface() {
+
+      if (signupEnabled === true) {
+
+        statusDot.className =
+          "dot on";
+
+
+        statusTitle.textContent =
+          "Automatic signup is ON";
+
+
+        statusDescription.textContent =
+          "The registration program is allowed to book sessions.";
+
+
+        toggleButton.textContent =
+          "Pause signups";
+
+
+        toggleButton.className =
+          "pause";
+
+
+        toggleButton.disabled =
+          false;
+
+      }
+
+      else {
+
+        statusDot.className =
+          "dot off";
+
+
+        statusTitle.textContent =
+          "Automatic signup is OFF";
+
+
+        statusDescription.textContent =
+          "No sessions should be booked until signup is resumed.";
+
+
+        toggleButton.textContent =
+          "Resume signups";
+
+
+        toggleButton.className =
+          "resume";
+
+
+        toggleButton.disabled =
+          false;
+
+      }
+
+    }
+
+
+    /*
+     * LISTEN TO FIREBASE
+     *
+     * Any change to config/control is pushed
+     * to this page in real time.
+     */
+
+    onSnapshot(
+
+      controlRef,
+
+
+      (snapshot) => {
+
+        if (!snapshot.exists()) {
+
+          statusTitle.textContent =
+            "Configuration not found";
+
+
+          statusDescription.textContent =
+            "Firebase could not find config/control.";
+
+
+          statusDot.className =
+            "dot off";
+
+
+          toggleButton.disabled =
+            true;
+
+
+          message.textContent =
+            "Create the config/control document in Firestore.";
+
+
+          message.className =
+            "message error";
+
+
+          return;
+
+        }
+
+
+        const data =
+          snapshot.data();
+
+
+        signupEnabled =
+          data.enabled !== false;
+
+
+        updateInterface();
+
+
+        message.textContent =
+          "Setting synchronized with Firebase.";
+
+
+        message.className =
+          "message success";
+
+      },
+
+
+      (error) => {
+
+        console.error(
+          "Firebase read error:",
+          error
+        );
+
+
+        statusTitle.textContent =
+          "Firebase connection error";
+
+
+        statusDescription.textContent =
+          "The current signup setting could not be loaded.";
+
+
+        statusDot.className =
+          "dot off";
+
+
+        toggleButton.disabled =
+          true;
+
+
+        message.textContent =
+          error.message;
+
+
+        message.className =
+          "message error";
+
+      }
+
+    );
+
+
+    /*
+     * PAUSE / RESUME BUTTON
+     */
+
+    toggleButton.addEventListener(
+
+      "click",
+
+
+      async () => {
+
+        if (signupEnabled === null) {
+          return;
+        }
+
+
+        toggleButton.disabled =
+          true;
+
+
+        toggleButton.className =
+          "loading";
+
+
+        toggleButton.textContent =
+          "Saving...";
+
+
+        message.textContent =
+          "Updating Firebase...";
+
+
+        message.className =
+          "message";
+
+
+        try {
+
+          await updateDoc(
+
+            controlRef,
+
+            {
+              enabled:
+                !signupEnabled
+            }
+
+          );
+
+
+          /*
+           * Do not manually change signupEnabled here.
+           *
+           * Firestore onSnapshot will receive the saved
+           * value and update the interface.
+           */
+
+        }
+
+
+        catch (error) {
+
+          console.error(
+            "Firebase write error:",
+            error
+          );
+
+
+          message.textContent =
+            "Could not save setting: " +
+            error.message;
+
+
+          message.className =
+            "message error";
+
+
+          updateInterface();
+
+        }
+
+      }
+
+    );
+
+  </script>
+
+</body>
+
+</html>
