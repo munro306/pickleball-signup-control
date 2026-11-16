@@ -25,7 +25,7 @@
       padding:
         max(18px, env(safe-area-inset-top))
         max(14px, env(safe-area-inset-right))
-        max(30px, env(safe-area-inset-bottom))
+        max(32px, env(safe-area-inset-bottom))
         max(14px, env(safe-area-inset-left));
 
       font-family:
@@ -48,23 +48,25 @@
     }
 
     .eyebrow {
+      margin-bottom: 6px;
+
       color: #2563eb;
+
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.3px;
-      margin-bottom: 6px;
     }
 
     h1 {
       margin: 0;
+
       font-size: 29px;
-      letter-spacing: -0.6px;
       line-height: 1.15;
+      letter-spacing: -0.6px;
     }
 
     .subtitle {
-      margin-top: 7px;
-      margin-bottom: 0;
+      margin: 7px 0 0 0;
 
       color: #64748b;
 
@@ -100,7 +102,7 @@
       width: 13px;
       height: 13px;
 
-      margin-top: 6px;
+      margin-top: 7px;
 
       flex-shrink: 0;
 
@@ -109,12 +111,14 @@
 
     .dot.on {
       background: #22c55e;
+
       box-shadow:
         0 0 0 4px rgba(34, 197, 94, 0.12);
     }
 
     .dot.off {
       background: #ef4444;
+
       box-shadow:
         0 0 0 4px rgba(239, 68, 68, 0.12);
     }
@@ -148,8 +152,7 @@
     }
 
     .sectionDescription {
-      margin-top: 5px;
-      margin-bottom: 0;
+      margin: 5px 0 0 0;
 
       color: #64748b;
 
@@ -160,6 +163,8 @@
     button {
       width: 100%;
       min-height: 52px;
+
+      padding: 11px 16px;
 
       border: none;
       border-radius: 15px;
@@ -174,13 +179,15 @@
     }
 
     button:disabled {
-      opacity: 0.6;
+      opacity: 0.55;
       cursor: default;
     }
 
     .mainButton {
       margin-top: 20px;
+
       min-height: 56px;
+
       font-size: 17px;
     }
 
@@ -194,8 +201,13 @@
       color: white;
     }
 
+    .loadingButton {
+      background: #e5e7eb;
+      color: #64748b;
+    }
+
     .secondaryButton {
-      margin-top: 15px;
+      margin-top: 14px;
 
       background: #f8fafc;
       color: #334155;
@@ -227,6 +239,7 @@
       color: #64748b;
 
       font-size: 13px;
+      line-height: 1.45;
     }
 
     .message.success {
@@ -243,18 +256,14 @@
     }
 
     .nextRunLabel {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-
       color: #1e40af;
 
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .nextRunDate {
-      margin-top: 12px;
+      margin-top: 11px;
 
       font-size: 22px;
       font-weight: 750;
@@ -298,6 +307,7 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+
       gap: 12px;
     }
 
@@ -341,6 +351,7 @@
     .dateGrid {
       display: grid;
       grid-template-columns: 1fr;
+
       gap: 13px;
 
       margin-top: 16px;
@@ -370,35 +381,41 @@
 
       font-family: inherit;
       font-size: 16px;
-
-      -webkit-appearance: none;
     }
 
     .vacationStatus {
+      display: none;
+
       margin-top: 14px;
+      padding: 13px;
 
-      padding: 12px 13px;
+      background: #fff7ed;
 
-      background: #f8fafc;
-
+      border: 1px solid #fed7aa;
       border-radius: 13px;
 
-      color: #475569;
+      color: #9a3412;
 
       font-size: 13px;
       line-height: 1.45;
-
-      display: none;
     }
 
-    .footer {
-      margin-top: 22px;
+    .connection {
+      margin-top: 20px;
 
       text-align: center;
 
-      color: #94a3b8;
+      color: #64748b;
 
-      font-size: 11px;
+      font-size: 12px;
+    }
+
+    .connection.good {
+      color: #15803d;
+    }
+
+    .connection.bad {
+      color: #b91c1c;
     }
 
     @media (min-width: 520px) {
@@ -434,7 +451,7 @@
     </p>
 
 
-    <!-- MAIN ON/OFF CONTROL -->
+    <!-- MASTER CONTROL -->
 
     <section class="card primaryCard">
 
@@ -468,7 +485,7 @@
 
       <button
         id="toggleButton"
-        class="mainButton"
+        class="mainButton loadingButton"
         disabled
       >
         Connecting...
@@ -479,18 +496,18 @@
         id="mainMessage"
         class="message"
       >
-        Connecting to Firebase...
+        Starting Firebase...
       </div>
 
     </section>
 
 
-    <!-- NEXT AUTOMATION RUN -->
+    <!-- NEXT RUN -->
 
     <section class="card nextRun">
 
       <div class="nextRunLabel">
-        📅 Next automation run
+        📅 NEXT AUTOMATION RUN
       </div>
 
       <div
@@ -526,8 +543,6 @@
 
       <div class="dayGrid">
 
-        <!-- Wednesday -->
-
         <div class="dayCard">
 
           <div class="dayHeader">
@@ -544,10 +559,9 @@
 
             </div>
 
-
             <span
               id="wednesdayBadge"
-              class="badge"
+              class="badge badgeSkipped"
             >
               Loading
             </span>
@@ -566,8 +580,6 @@
         </div>
 
 
-        <!-- Friday -->
-
         <div class="dayCard">
 
           <div class="dayHeader">
@@ -584,10 +596,9 @@
 
             </div>
 
-
             <span
               id="fridayBadge"
-              class="badge"
+              class="badge badgeSkipped"
             >
               Loading
             </span>
@@ -683,19 +694,1098 @@
     </section>
 
 
-    <div class="footer">
-      Settings synchronized with Firebase
+    <div
+      id="connection"
+      class="connection"
+    >
+      Starting application...
     </div>
 
   </main>
 
 
-  <script type="module">
+  <!--
+    Firebase compatibility libraries.
 
-    import {
-      initializeApp
-    } from
-      "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    Using classic script tags avoids the ES-module loading
+    problem we were seeing on the work computer.
+  -->
+
+  <script
+    src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js">
+  </script>
+
+  <script
+    src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js">
+  </script>
 
 
-    import {
+  <script>
+
+    console.log(
+      "Pickleball signup control JavaScript started."
+    );
+
+
+    /*
+     * ELEMENTS
+     */
+
+    const statusDot =
+      document.getElementById(
+        "statusDot"
+      );
+
+    const statusTitle =
+      document.getElementById(
+        "statusTitle"
+      );
+
+    const statusDescription =
+      document.getElementById(
+        "statusDescription"
+      );
+
+    const toggleButton =
+      document.getElementById(
+        "toggleButton"
+      );
+
+    const mainMessage =
+      document.getElementById(
+        "mainMessage"
+      );
+
+    const nextRunDate =
+      document.getElementById(
+        "nextRunDate"
+      );
+
+    const wednesdayBadge =
+      document.getElementById(
+        "wednesdayBadge"
+      );
+
+    const wednesdayButton =
+      document.getElementById(
+        "wednesdayButton"
+      );
+
+    const fridayBadge =
+      document.getElementById(
+        "fridayBadge"
+      );
+
+    const fridayButton =
+      document.getElementById(
+        "fridayButton"
+      );
+
+    const pauseFromInput =
+      document.getElementById(
+        "pauseFrom"
+      );
+
+    const pauseUntilInput =
+      document.getElementById(
+        "pauseUntil"
+      );
+
+    const saveVacationButton =
+      document.getElementById(
+        "saveVacationButton"
+      );
+
+    const clearVacationButton =
+      document.getElementById(
+        "clearVacationButton"
+      );
+
+    const vacationStatus =
+      document.getElementById(
+        "vacationStatus"
+      );
+
+    const vacationMessage =
+      document.getElementById(
+        "vacationMessage"
+      );
+
+    const connection =
+      document.getElementById(
+        "connection"
+      );
+
+
+    /*
+     * CALCULATE NEXT FRIDAY
+     *
+     * This runs BEFORE Firebase.
+     * Therefore, if this still says Calculating,
+     * we immediately know JavaScript did not run.
+     */
+
+    function displayNextRun() {
+
+      const formatter =
+        new Intl.DateTimeFormat(
+
+          "en-CA",
+
+          {
+            timeZone:
+              "America/Regina",
+
+            year:
+              "numeric",
+
+            month:
+              "numeric",
+
+            day:
+              "numeric",
+
+            weekday:
+              "short",
+
+            hour:
+              "numeric",
+
+            hour12:
+              false
+          }
+
+        );
+
+
+      const parts =
+        formatter.formatToParts(
+          new Date()
+        );
+
+
+      function getPart(name) {
+
+        const item =
+          parts.find(
+            part =>
+              part.type === name
+          );
+
+
+        return item
+          ? item.value
+          : null;
+
+      }
+
+
+      const year =
+        Number(
+          getPart("year")
+        );
+
+
+      const month =
+        Number(
+          getPart("month")
+        );
+
+
+      const day =
+        Number(
+          getPart("day")
+        );
+
+
+      const hour =
+        Number(
+          getPart("hour")
+        );
+
+
+      const reginaDate =
+        new Date(
+          year,
+          month - 1,
+          day,
+          hour
+        );
+
+
+      let daysUntilFriday =
+        (
+          5 -
+          reginaDate.getDay() +
+          7
+        ) % 7;
+
+
+      if (
+        daysUntilFriday === 0 &&
+        reginaDate.getHours() >= 19
+      ) {
+
+        daysUntilFriday =
+          7;
+
+      }
+
+
+      const friday =
+        new Date(
+          reginaDate
+        );
+
+
+      friday.setDate(
+
+        friday.getDate() +
+        daysUntilFriday
+
+      );
+
+
+      nextRunDate.textContent =
+        friday.toLocaleDateString(
+
+          "en-CA",
+
+          {
+            weekday:
+              "long",
+
+            month:
+              "long",
+
+            day:
+              "numeric",
+
+            year:
+              "numeric"
+          }
+
+        );
+
+    }
+
+
+    displayNextRun();
+
+
+    /*
+     * FIREBASE
+     */
+
+    try {
+
+      if (
+        typeof firebase ===
+        "undefined"
+      ) {
+
+        throw new Error(
+          "Firebase library did not load."
+        );
+
+      }
+
+
+      const firebaseConfig = {
+
+        apiKey:
+          "AIzaSyA5cbuNP_QgFnQfaZ8H851h_D3UU_UOcPM",
+
+        authDomain:
+          "pickleball-signup-a35aa.firebaseapp.com",
+
+        projectId:
+          "pickleball-signup-a35aa",
+
+        storageBucket:
+          "pickleball-signup-a35aa.firebasestorage.app",
+
+        messagingSenderId:
+          "257623392675",
+
+        appId:
+          "1:257623392675:web:a847008a080f0f28a7da16",
+
+        measurementId:
+          "G-SMX0L2DJ15"
+
+      };
+
+
+      firebase.initializeApp(
+        firebaseConfig
+      );
+
+
+      const db =
+        firebase.firestore();
+
+
+      const controlRef =
+        db
+          .collection("config")
+          .doc("control");
+
+
+      let settings = {
+
+        enabled:
+          true,
+
+        wednesdayEnabled:
+          true,
+
+        fridayEnabled:
+          true,
+
+        pauseFrom:
+          null,
+
+        pauseUntil:
+          null
+
+      };
+
+
+      function showConnection(
+        text,
+        good
+      ) {
+
+        connection.textContent =
+          text;
+
+
+        connection.className =
+          good
+            ? "connection good"
+            : "connection bad";
+
+      }
+
+
+      /*
+       * MAIN STATUS
+       */
+
+      function displayMaster() {
+
+        if (
+          settings.enabled
+        ) {
+
+          statusDot.className =
+            "dot on";
+
+
+          statusTitle.textContent =
+            "Automatic signup is ON";
+
+
+          statusDescription.textContent =
+            "The registration program is allowed to book sessions.";
+
+
+          toggleButton.textContent =
+            "Pause signups";
+
+
+          toggleButton.className =
+            "mainButton pause";
+
+        }
+
+        else {
+
+          statusDot.className =
+            "dot off";
+
+
+          statusTitle.textContent =
+            "Automatic signup is OFF";
+
+
+          statusDescription.textContent =
+            "No sessions will be booked until signup is resumed.";
+
+
+          toggleButton.textContent =
+            "Resume signups";
+
+
+          toggleButton.className =
+            "mainButton resume";
+
+        }
+
+
+        toggleButton.disabled =
+          false;
+
+      }
+
+
+      /*
+       * DAY DISPLAY
+       */
+
+      function displayDay(
+        isEnabled,
+        badge,
+        button
+      ) {
+
+        if (
+          isEnabled
+        ) {
+
+          badge.textContent =
+            "Included";
+
+
+          badge.className =
+            "badge badgeIncluded";
+
+
+          button.textContent =
+            "Skip this day";
+
+
+          button.className =
+            "includedButton";
+
+        }
+
+        else {
+
+          badge.textContent =
+            "Skipped";
+
+
+          badge.className =
+            "badge badgeSkipped";
+
+
+          button.textContent =
+            "Include this day";
+
+
+          button.className =
+            "skippedButton";
+
+        }
+
+
+        button.disabled =
+          false;
+
+      }
+
+
+      function displayDays() {
+
+        displayDay(
+
+          settings.wednesdayEnabled,
+
+          wednesdayBadge,
+
+          wednesdayButton
+
+        );
+
+
+        displayDay(
+
+          settings.fridayEnabled,
+
+          fridayBadge,
+
+          fridayButton
+
+        );
+
+      }
+
+
+      /*
+       * VACATION
+       */
+
+      function prettyDate(
+        value
+      ) {
+
+        if (
+          !value
+        ) {
+
+          return "";
+
+        }
+
+
+        const date =
+          new Date(
+            value +
+            "T12:00:00"
+          );
+
+
+        return date.toLocaleDateString(
+
+          "en-CA",
+
+          {
+            month:
+              "long",
+
+            day:
+              "numeric",
+
+            year:
+              "numeric"
+          }
+
+        );
+
+      }
+
+
+      function displayVacation() {
+
+        pauseFromInput.value =
+          settings.pauseFrom || "";
+
+
+        pauseUntilInput.value =
+          settings.pauseUntil || "";
+
+
+        saveVacationButton.disabled =
+          false;
+
+
+        clearVacationButton.disabled =
+          false;
+
+
+        if (
+          settings.pauseFrom &&
+          settings.pauseUntil
+        ) {
+
+          vacationStatus.style.display =
+            "block";
+
+
+          vacationStatus.textContent =
+            "Signup will skip sessions from " +
+            prettyDate(
+              settings.pauseFrom
+            ) +
+            " through " +
+            prettyDate(
+              settings.pauseUntil
+            ) +
+            ".";
+
+        }
+
+        else {
+
+          vacationStatus.style.display =
+            "none";
+
+
+          vacationStatus.textContent =
+            "";
+
+        }
+
+      }
+
+
+      /*
+       * DISPLAY ALL
+       */
+
+      function displayAll() {
+
+        displayMaster();
+
+        displayDays();
+
+        displayVacation();
+
+      }
+
+
+      /*
+       * FIREBASE LISTENER
+       */
+
+      controlRef.onSnapshot(
+
+        function(snapshot) {
+
+          if (
+            !snapshot.exists
+          ) {
+
+            mainMessage.textContent =
+              "Firebase config/control document was not found.";
+
+
+            mainMessage.className =
+              "message error";
+
+
+            showConnection(
+              "Firebase document not found.",
+              false
+            );
+
+
+            return;
+
+          }
+
+
+          const data =
+            snapshot.data();
+
+
+          settings = {
+
+            enabled:
+              data.enabled !== false,
+
+            wednesdayEnabled:
+              data.wednesdayEnabled !== false,
+
+            fridayEnabled:
+              data.fridayEnabled !== false,
+
+            pauseFrom:
+              data.pauseFrom || null,
+
+            pauseUntil:
+              data.pauseUntil || null
+
+          };
+
+
+          displayAll();
+
+
+          mainMessage.textContent =
+            "Setting synchronized with Firebase.";
+
+
+          mainMessage.className =
+            "message success";
+
+
+          showConnection(
+            "● Connected to Firebase",
+            true
+          );
+
+
+          console.log(
+            "Firebase settings loaded:",
+            settings
+          );
+
+        },
+
+
+        function(error) {
+
+          console.error(
+            "Firebase listener error:",
+            error
+          );
+
+
+          mainMessage.textContent =
+            "Firebase error: " +
+            error.message;
+
+
+          mainMessage.className =
+            "message error";
+
+
+          showConnection(
+            "Firebase connection error",
+            false
+          );
+
+        }
+
+      );
+
+
+      /*
+       * MASTER ON / OFF
+       */
+
+      toggleButton.addEventListener(
+
+        "click",
+
+        async function() {
+
+          toggleButton.disabled =
+            true;
+
+
+          mainMessage.textContent =
+            "Saving...";
+
+
+          try {
+
+            await controlRef.update({
+
+              enabled:
+                !settings.enabled
+
+            });
+
+          }
+
+          catch(error) {
+
+            console.error(error);
+
+
+            mainMessage.textContent =
+              "Could not save: " +
+              error.message;
+
+
+            mainMessage.className =
+              "message error";
+
+
+            toggleButton.disabled =
+              false;
+
+          }
+
+        }
+
+      );
+
+
+      /*
+       * WEDNESDAY
+       */
+
+      wednesdayButton.addEventListener(
+
+        "click",
+
+        async function() {
+
+          wednesdayButton.disabled =
+            true;
+
+
+          try {
+
+            await controlRef.update({
+
+              wednesdayEnabled:
+                !settings.wednesdayEnabled
+
+            });
+
+          }
+
+          catch(error) {
+
+            console.error(error);
+
+
+            mainMessage.textContent =
+              "Could not update Wednesday: " +
+              error.message;
+
+
+            mainMessage.className =
+              "message error";
+
+
+            wednesdayButton.disabled =
+              false;
+
+          }
+
+        }
+
+      );
+
+
+      /*
+       * FRIDAY
+       */
+
+      fridayButton.addEventListener(
+
+        "click",
+
+        async function() {
+
+          fridayButton.disabled =
+            true;
+
+
+          try {
+
+            await controlRef.update({
+
+              fridayEnabled:
+                !settings.fridayEnabled
+
+            });
+
+          }
+
+          catch(error) {
+
+            console.error(error);
+
+
+            mainMessage.textContent =
+              "Could not update Friday: " +
+              error.message;
+
+
+            mainMessage.className =
+              "message error";
+
+
+            fridayButton.disabled =
+              false;
+
+          }
+
+        }
+
+      );
+
+
+      /*
+       * SAVE VACATION
+       */
+
+      saveVacationButton.addEventListener(
+
+        "click",
+
+        async function() {
+
+          const pauseFrom =
+            pauseFromInput.value || null;
+
+
+          const pauseUntil =
+            pauseUntilInput.value || null;
+
+
+          if (
+            pauseFrom &&
+            pauseUntil &&
+            pauseUntil < pauseFrom
+          ) {
+
+            vacationMessage.textContent =
+              "Returning date must be after the away date.";
+
+
+            vacationMessage.className =
+              "message error";
+
+
+            return;
+
+          }
+
+
+          saveVacationButton.disabled =
+            true;
+
+
+          vacationMessage.textContent =
+            "Saving vacation dates...";
+
+
+          try {
+
+            await controlRef.update({
+
+              pauseFrom:
+                pauseFrom,
+
+              pauseUntil:
+                pauseUntil
+
+            });
+
+
+            vacationMessage.textContent =
+              "Vacation dates saved.";
+
+
+            vacationMessage.className =
+              "message success";
+
+          }
+
+          catch(error) {
+
+            console.error(error);
+
+
+            vacationMessage.textContent =
+              "Could not save dates: " +
+              error.message;
+
+
+            vacationMessage.className =
+              "message error";
+
+          }
+
+          finally {
+
+            saveVacationButton.disabled =
+              false;
+
+          }
+
+        }
+
+      );
+
+
+      /*
+       * CLEAR VACATION
+       */
+
+      clearVacationButton.addEventListener(
+
+        "click",
+
+        async function() {
+
+          clearVacationButton.disabled =
+            true;
+
+
+          vacationMessage.textContent =
+            "Clearing vacation dates...";
+
+
+          try {
+
+            await controlRef.update({
+
+              pauseFrom:
+                null,
+
+              pauseUntil:
+                null
+
+            });
+
+
+            vacationMessage.textContent =
+              "Vacation dates cleared.";
+
+
+            vacationMessage.className =
+              "message success";
+
+          }
+
+          catch(error) {
+
+            console.error(error);
+
+
+            vacationMessage.textContent =
+              "Could not clear dates: " +
+              error.message;
+
+
+            vacationMessage.className =
+              "message error";
+
+          }
+
+          finally {
+
+            clearVacationButton.disabled =
+              false;
+
+          }
+
+        }
+
+      );
+
+    }
+
+
+    catch(error) {
+
+      console.error(
+        "Application startup error:",
+        error
+      );
+
+
+      statusTitle.textContent =
+        "Application error";
+
+
+      statusDescription.textContent =
+        error.message;
+
+
+      statusDot.className =
+        "dot off";
+
+
+      mainMessage.textContent =
+        error.message;
+
+
+      mainMessage.className =
+        "message error";
+
+
+      connection.textContent =
+        "Application could not start";
+
+
+      connection.className =
+        "connection bad";
+
+    }
+
+  </script>
+
+</body>
+
+</html>
